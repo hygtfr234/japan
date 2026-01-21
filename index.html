@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>四國冒險日誌 V20.0</title>
+    <title>四國冒險日誌 V21.0</title>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Noto+Serif+TC:wght@900&display=swap" rel="stylesheet">
     <style>
         :root { --maple-bg: #87CEEB; }
@@ -36,6 +36,7 @@
         }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
+        /* Tabs */
         .tabs { display: flex; width: 100%; background: #6D4C41; border-bottom: 2px solid #3E2723; }
         .tab-btn {
             flex: 1; background: linear-gradient(to bottom, #8D6E63, #5D4037);
@@ -51,6 +52,7 @@
 
         .content-area { background: #FFF; padding: 15px; min-height: 480px; position: relative; }
 
+        /* 天氣面板 */
         .weather-panel {
             background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
             border: 2px solid #1E88E5; border-radius: 12px; padding: 12px; margin-bottom: 15px;
@@ -59,17 +61,12 @@
         .weather-left { display: flex; flex-direction: column; }
         .weather-loc { font-size: 15px; font-weight: 900; color: #1565C0; margin-bottom: 2px; }
         .weather-status { font-size: 14px; font-weight: bold; color: #333; }
+        .weather-detail { font-size: 12px; color: #555; margin-top: 2px; font-weight: bold;}
         .weather-right { text-align: right; display: flex; flex-direction: column; align-items: center; }
         .weather-icon-img { width: 45px; height: 45px; object-fit: contain; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1)); }
         .weather-temp { font-size: 28px; color: #D84315; font-weight: 900; line-height: 1; margin-top: 5px; }
-        .weather-tenki-btn {
-            display: inline-block; background: #fff; color: #D32F2F; text-decoration: none;
-            padding: 4px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;
-            margin-top: 5px; border: 1px solid #D32F2F; box-shadow: 0 2px 0 #B71C1C;
-        }
-        .weather-tenki-btn:active { transform: translateY(2px); box-shadow: none; }
 
-        /* 導航按鈕 (回家卷軸) */
+        /* 導航按鈕 (回家卷軸風格) */
         .btn-nav { 
             flex: 1; background: linear-gradient(to bottom, #FFF3E0, #FFE0B2); padding: 10px; 
             border: 1px solid #FF9800; box-shadow: 0 4px 0 #E65100; text-shadow: 0 1px 0 rgba(255,255,255,0.5);
@@ -78,6 +75,7 @@
         }
         .btn-nav:active { box-shadow: 0 0 0 #E65100; transform: translateY(4px); }
         
+        /* 資訊按鈕 */
         .btn-info { 
             width: 60px; background: linear-gradient(to bottom, #ffd200, #f7971e); color: white; font-size: 20px; 
             border: 1px solid #F57F17; box-shadow: 0 4px 0 #E65100; font-family: serif; font-weight: bold;
@@ -86,6 +84,7 @@
         }
         .btn-info:active { box-shadow: 0 0 0 #E65100; transform: translateY(4px); }
         
+        /* 飯店按鈕 */
         .btn-hotel { 
             width:100%; background: linear-gradient(to bottom, #ff758c, #ff7eb3); font-size: 20px; padding: 15px; margin-top: 10px; 
             border-radius: 8px; color: white; text-decoration: none; font-weight: bold; display: block; text-align: center; 
@@ -95,6 +94,7 @@
         
         .action-btns { display: flex; gap: 8px; margin-top: 10px; }
 
+        /* 行程列表 */
         .quest-list { list-style: none; padding: 0; margin: 0; }
         .quest-item { border-bottom: 2px dashed #D7CCC8; padding: 15px 0; }
         .quest-item:last-child { border-bottom: none; }
@@ -112,17 +112,20 @@
             object-fit: contain; vertical-align: middle; 
             display: inline-block; filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.2));
         }
+        .large-icon { width: 120px; height: auto; display: block; margin: 10px auto; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3)); }
 
-        .exp-bar-container {
+        /* 底部 Bar (EXP / Guild) */
+        .footer-bar-container {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 35px;
             background: #2b2b2b; border-top: 2px solid #FFD700;
             display: flex; align-items: center; padding: 0 15px; z-index: 999;
         }
+        /* EXP Bar 樣式 */
         .exp-track { flex: 1; height: 12px; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #555; }
-        .exp-fill { height: 100%; background: linear-gradient(to bottom, #00FF00, #00CC00); width: 0%; transition: 0.5s; }
+        .exp-fill { height: 100%; background: linear-gradient(to bottom, #00FF00, #00CC00); width: 99.99%; }
         .exp-text { color: #FFF; font-size: 12px; margin-left: 10px; font-family: monospace; white-space: nowrap; }
-
-        /* Guild Marquee for Info Page */
+        
+        /* 公會廣播樣式 */
         .guild-marquee {
             width: 100%; color: #00FF00; font-weight: bold; font-size: 14px;
             display: flex; align-items: center; justify-content: center;
@@ -130,6 +133,7 @@
         }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
+        /* NPC 對話框 */
         .npc-dialog {
             background: #FFF8DC; border: 2px solid #DAA520; border-radius: 12px;
             padding: 15px 15px 15px 65px; position: relative; margin-top: 25px;
@@ -147,6 +151,7 @@
         .sub-nav-btn.active-main { background: #FFF; border-color: #FFCC00; color: #333; }
         .sub-nav-btn.active-backup { background: #E6E6FA; border-color: #9370DB; color: #4B0082; }
 
+        /* INFO 頁面專屬 */
         .papulatus-wrapper {
             position: relative; text-align: center; margin-top: 20px; height: 220px;
         }
@@ -162,9 +167,10 @@
         .drop-item {
             width: 45px; height: 45px; position: absolute; animation: bounceDrop 2s infinite; filter: drop-shadow(0 0 5px yellow); z-index: 3;
         }
-        .drop-1 { top: 90px; left: 15%; animation-delay: 0s; } 
-        .drop-2 { top: 70px; right: 15%; animation-delay: 0.5s; } 
-        .drop-3 { top: 150px; right: 25%; animation-delay: 1s; } 
+        /* 寶物位置調整 */
+        .drop-1 { top: 90px; left: 15%; animation-delay: 0s; } /* 卷軸 */
+        .drop-2 { top: 70px; right: 15%; animation-delay: 0.5s; } /* 鑰匙 */
+        .drop-3 { top: 150px; right: 25%; animation-delay: 1s; } /* 發條 */
 
         @keyframes float { 0%, 100% { top: 45px; } 50% { top: 35px; } }
         @keyframes bounceDrop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
@@ -209,10 +215,12 @@
     <div class="content-area" id="mainContent"></div>
 </div>
 
-<div class="exp-bar-container" id="footerBar">
+<!-- 底部 Bar -->
+<div class="footer-bar-container" id="footerBar">
+    <!-- 預設 EXP 條 -->
     <span style="color:#FFCC00; font-weight:900; margin-right:10px;">EXP</span>
     <div class="exp-track"><div class="exp-fill" id="expFill"></div></div>
-    <span class="exp-text" id="expText">0%</span>
+    <span class="exp-text">Next Level: 2027 (99.99%)</span>
 </div>
 
 <div id="snowContainer" class="snow-container"></div>
@@ -222,13 +230,15 @@
     // 🎨 圖示庫
     // =========================================================
     
-    // 華航飛機 (Base64) - 絕對不破圖
-    const PLANE_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjRTMwMDc5IiBkPSJNMzUuNCAyNDQuOGMtMi45IDguNSAxLjYgMTcuNyAxMC4zIDIwLjUgOC43IDIuOCAxOC4xLTIgMjEuMS0xMC41IDMuMS04LjYtMS42LTE3LjktMTAuNC0yMC43LTguNi0yLjgtMTguMSAxLjktMjEgMTAuN3ptMTI4LjIgOTEuMWMtMTYuNy01LjMtMjUuMSA4LjgtMTguNCAxOS45IDUuMiA4LjUgMTkuMiA5LjIgMzEuOSAzLjggMTEuNy01IDExLjItMTcuNS41LTIxLjQtNC4xLTEuNS05LjItMi4yLTE0LTIuM3ptLTgwLjUgNzEuOGMtMTQuMyAxNS41IDUgMzIuMyAyMS40IDMwLjUgMTIuOS0xLjQgMTguNi0xMi42IDE0LjUtMjIuOS0zLjMtOC40LTE1LjYtMTQuNC0yNi41LTEyLjN6bTMxOS41LTg4LjJjLTE4LjUgMjMuNi00Ny41IDM4LjMtNjQuMyA1My4yLTIyLjYgMjAuMS0yNS4xIDUyLjEtMy41IDczLjEgMjEuNCAyMC45IDU4LjMgMTYuNCA4My44LTEwLjIgMjMuNS0yNC42IDMyLjUtNTcuMyAxNS45LTk4LjctNi41LTE2LjEtMTgtMTkuOS0zMS45LTE3LjR6bS0xMzUuMy01LjRjLTEuOS0xNS41LTE2LjgtMjEuMy0zMy0xMi45LTE2LjEgOC40LTE2LjggMjguNi0xLjMgMzQuNCAxMS42IDQuMyAyNy41LTMuMyAzMi43LTE2LjEgMS4xLTIuNyAxLjYtNS40IDEuNi01LjR6bTE0LjkgMTY4LjJjLTI1LjEgNi42LTI4LjIgNDAuNS00LjUgNDguMyAxOC42IDYuMSAzNy44LTE1IDMxLjQtMzcuNS0zLjUtMTIuMy0xNi45LTE1LjctMjYuOS0xMC44em0tMjIxLjYgMi44Yy04LjUgMTEuMS0yLjIgMjcuMiAxMS43IDI5LjUgMTEuMSAxLjkgMTguNC0xMC4xIDEyLjctMjAuNS00LjctOC41LTE1LjktMTQuOS0yNC40LTl6bTMzNi40LTI4LjRjLTIzLjUtOC42LTM1LjUgMTguNi0xOC40IDM2LjggMTMuNSAxNC4zIDM3LjMgNyAzOC0xMS44LjUtMTQuOC0xMC4xLTIxLjUtMTkuNi0yNXoiLz48L3N2Zz4=";
+    // 飛機 icon (MapleStory Airplane Mount)
+    const PLANE_ICON = "https://maplestory.io/api/gms/62/item/1902015/icon";
 
-    // 回家卷軸 (所有導航圖示)
+    // 楓之谷圖示 (Maplestory.io)
+    // 導航圖示：全部改成回家卷軸 (2030000)
     const RETURN_SCROLL = "https://maplestory.io/api/gms/62/item/2030000/icon"; 
-    const SCROLL_ICON_INFO = "https://maplestory.io/api/gms/62/item/2040804/icon"; 
+    const SCROLL_ICON_INFO = "https://maplestory.io/api/gms/62/item/2040804/icon"; // 資訊按鈕用
 
+    // 行程類別圖示
     const CAR_MOUNT = "https://maplestory.io/api/gms/62/item/1902000/icon"; 
     const BENTO = "https://maplestory.io/api/gms/62/item/2022000/icon"; 
     const TREE_BRANCH = "https://maplestory.io/api/gms/62/item/4000003/icon"; 
@@ -242,12 +252,12 @@
     const TAKOYAKI = "https://maplestory.io/api/gms/62/item/2022001/icon";
     const RAMEN = "https://maplestory.io/api/gms/62/item/2022039/icon";
     const SAKURA = "https://maplestory.io/api/gms/62/item/4000283/icon";
-    const DOLPHIN = "https://maplestory.io/api/gms/62/item/5000049/icon"; // 海豚圖示
+    const DOLPHIN = "https://maplestory.io/api/gms/62/item/5000049/icon"; 
 
-    // 拉圖斯掉落物 (修復)
-    const PAP_MARK = "https://maplestory.io/api/gms/62/item/1022079/icon"; 
-    const SPIRIT = "https://maplestory.io/api/gms/62/item/4000295/icon"; 
-    const CLOCK_SPRING = "https://maplestory.io/api/gms/62/item/4000381/icon"; 
+    // 拉圖斯掉落物 (已修正代碼)
+    const CHAOS_SCROLL = "https://maplestory.io/api/gms/62/item/2049100/icon"; // 混沌卷軸 (取代破圖眼飾)
+    const SPIRIT = "https://maplestory.io/api/gms/62/item/4000295/icon"; // 靈魂
+    const CLOCK_SPRING = "https://maplestory.io/api/gms/62/item/4000381/icon"; // 發條
 
     // 天氣圖示
     const WEATHER_SUN = "https://maplestory.io/api/gms/62/item/4000038/icon"; 
@@ -265,12 +275,13 @@
     };
 
     // =========================================================
-    // 📅 行程資料 (V20.0)
+    // 📅 行程資料 (V21.0 - 內建天氣+修正版)
     // =========================================================
     const itinerary = {
         1: {
             title: "Day 1｜抵達高松",
             date: "1/23 (五)", location: "Takamatsu",
+            weather: { temp: "8°", status: "晴", detail: "H:12° L:3°", icon: WEATHER_SUN },
             events: [
                 { time: "07:00", title: "CI278 桃園起飛", desc: "前往高松，冒險開始！", icon: 'plane', noNav: true },
                 { time: "10:20", title: "抵達高松空港", desc: "入境、前往 Toyota 租車", lat: 34.2127, lng: 134.0175, icon: 'car', link: "https://www.google.com/search?q=toyota+rent+a+car+takamatsu+airport+shop" },
@@ -284,6 +295,7 @@
         2: {
             title: "Day 2｜小豆島",
             date: "1/24 (六)", location: "Shodoshima",
+            weather: { temp: "9°", status: "多雲", detail: "H:11° L:5°", icon: WEATHER_CLOUD },
             events: [
                 { time: "08:00", title: "高松港 → 土庄港", desc: "搭乘渡輪 (約1H)", lat: 34.3524, lng: 134.0520, icon: 'boat' },
                 { time: "09:30", title: "橄欖公園", desc: "魔女宅急便掃帚拍照", lat: 34.4754, lng: 134.2947, icon: 'nature' },
@@ -296,11 +308,12 @@
         3: {
             title: "Day 3｜彈性選擇日",
             date: "1/25 (日)", location: "Kotohira",
+            weather: { temp: "7°", status: "晴", detail: "H:10° L:2°", icon: WEATHER_SUN },
             eventsMain: [
                 { time: "09:00", title: "金刀比羅宮", desc: "挑戰1368階梯，參拜狗狗神", lat: 34.1837, lng: 133.8122, icon: 'shrine' },
                 { time: "12:30", title: "山越烏龍麵", desc: "烏龍麵名店午餐", lat: 34.2384, lng: 133.9213, icon: 'food' },
                 { time: "14:30", title: "滿濃公園", desc: "國營公園賞花散步", lat: 34.1678, lng: 133.8647, icon: 'sight', link: "https://maps.app.goo.gl/eeARXireyGCwiDNd9" },
-                { time: "18:00", title: "市區晚餐", desc: "返回高松", lat: 34.3428, lng: 134.0466, icon: 'dinner' }
+                { time: "18:00", title: "市區晚餐", desc: "返回高松", lat: 34.3428, lng: 134.0466, icon: 'food' }
             ],
             eventsBackup: [
                 { time: "09:00", title: "前往男木島", desc: "高松港搭船前往", lat: 34.3524, lng: 134.0520, icon: 'boat' },
@@ -313,6 +326,7 @@
         4: {
             title: "Day 4｜倉敷一日遊",
             date: "1/26 (一)", location: "Kurashiki",
+            weather: { temp: "6°", status: "陰", detail: "H:9° L:4°", icon: WEATHER_CLOUD },
             events: [
                 { time: "08:00", title: "前往倉敷", desc: "自駕/JR (瀨戶大橋)", lat: 34.5951, lng: 133.7667, icon: 'car' },
                 { time: "10:00", title: "倉敷美觀地區", desc: "運河遊船、古街散步", lat: 34.5957, lng: 133.7712, icon: 'sakura' },
@@ -325,12 +339,11 @@
         5: {
             title: "Day 5｜返程日",
             date: "1/27 (二)", location: "Takamatsu",
+            weather: { temp: "8°", status: "晴", detail: "H:13° L:4°", icon: WEATHER_SUN },
             events: [
-                // 行程分拆
                 { time: "10:00", title: "高松中央商店街", desc: "八大條商店街 自由逛", lat: 34.3444, lng: 134.0522, icon: 'shop' },
                 { time: "10:00", title: "丸龜町 GREEN", desc: "時尚購物商場", lat: 34.3444, lng: 134.0490, icon: 'shop' },
                 { time: "10:00", title: "日本海豚中心", desc: "Japan Dolphin Center", lat: 34.2882, lng: 134.2690, icon: 'dolphin' },
-                
                 { time: "14:30", title: "還車 (Toyota 空港店)", desc: "加油、還車", lat: 34.2127, lng: 134.0175, icon: 'car', link: "https://www.google.com/search?q=toyota+rent+a+car+takamatsu+airport+shop" },
                 { time: "18:55", title: "CI179 起飛返台", desc: "Bye Bye!", lat: 34.2142, lng: 134.0157, icon: 'plane', noNav: true }
             ],
@@ -350,36 +363,31 @@
             document.querySelectorAll('.tab-btn')[day - 1].classList.add('active');
             renderSchedule(day);
             snowContainer.style.display = 'none';
-            // 更新 EXP (Day 1-5)
             updateExp(day);
         } else {
             document.querySelectorAll('.tab-btn')[5].classList.add('active');
             renderInfo();
             snowContainer.style.display = 'block';
             createSnow();
-            // Info 頁面更換為公會廣播
-            footerBar.innerHTML = `
-                <div class="guild-marquee">[廣播] on9ay招生中</div>
-            `;
+            footerBar.innerHTML = `<div class="guild-marquee">[廣播] on9ay招生中</div>`;
         }
     }
 
     function renderSchedule(day) {
         const data = itinerary[day];
         const content = document.getElementById('mainContent');
-        
-        // 抓天氣
-        fetchWeatherDetailed(data.lat, data.long, data.location);
+        const w = data.weather;
 
         let html = `
             <div class="weather-panel">
                 <div class="weather-left">
                     <div class="weather-loc">📍 ${data.location} ${data.date}</div>
-                    <div id="weatherDesc" class="weather-detail">讀取中...</div>
+                    <div class="weather-status">${w.status}</div>
+                    <div class="weather-detail">${w.detail}</div>
                 </div>
                 <div class="weather-right">
-                    <img id="weatherIconImg" src="${WEATHER_SUN}" class="weather-icon-img" alt="weather">
-                    <span id="weatherTemp" class="weather-temp">--°</span>
+                    <img src="${w.icon}" class="weather-icon-img" alt="weather">
+                    <span class="weather-temp">${w.temp}</span>
                 </div>
             </div>
 
@@ -472,7 +480,7 @@
             <div class="papulatus-wrapper">
                 <div class="haidilao-text">海底撈月</div>
                 <img src="https://maplestory.io/api/gms/62/mob/8500001/render/move?center=true" class="papulatus-img" alt="papulatus">
-                <img src="${PAP_MARK}" class="drop-item drop-1" title="拉圖斯標誌">
+                <img src="${CHAOS_SCROLL}" class="drop-item drop-1" title="混沌卷軸">
                 <img src="${SPIRIT}" class="drop-item drop-2" title="異界鑰匙">
                 <img src="${CLOCK_SPRING}" class="drop-item drop-3" title="發條">
             </div>
@@ -496,13 +504,10 @@
         `;
     }
 
-    // EXP 條計算 (Day 1 = 20%, Day 5 = 100%)
     function updateExp(day) {
         const footerBar = document.getElementById('footerBar');
-        if (!footerBar) return;
-        
+        if(!footerBar) return;
         let pct = Math.round((day / 5) * 100);
-        
         footerBar.innerHTML = `
             <span style="color:#FFCC00; font-weight:900; margin-right:10px;">EXP</span>
             <div class="exp-track"><div class="exp-fill" style="width:${pct}%"></div></div>
@@ -521,44 +526,6 @@
             snow.style.animationDuration = Math.random() * 3 + 2 + 's';
             snow.style.fontSize = Math.random() * 10 + 10 + 'px';
             container.appendChild(snow);
-        }
-    }
-
-    // 天氣 API + Tenki.jp 按鈕
-    async function fetchWeatherDetailed(lat, long, loc) {
-        const tEl = document.getElementById('weatherTemp');
-        const dEl = document.getElementById('weatherDesc');
-        const iImg = document.getElementById('weatherIconImg');
-        
-        tEl.innerText = "--"; 
-        dEl.innerText = "讀取中...";
-
-        try {
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true&timezone=Asia%2FTokyo`;
-            const res = await fetch(url);
-            
-            if (!res.ok) throw new Error("API Fail");
-            
-            const data = await res.json();
-            const current = data.current_weather;
-            const temp = Math.round(current.temperature);
-            const code = current.weathercode;
-
-            let iconSrc = WEATHER_SUN;
-            let statusText = "晴朗";
-
-            if (code >= 71) { iconSrc = WEATHER_SNOW; statusText = "下雪"; }
-            else if (code >= 51) { iconSrc = WEATHER_RAIN; statusText = "有雨"; }
-            else if (code >= 45) { iconSrc = WEATHER_CLOUD; statusText = "有霧"; }
-            else if (code >= 1) { iconSrc = WEATHER_CLOUD; statusText = "多雲"; } 
-            
-            tEl.innerText = `${temp}°`;
-            iImg.src = iconSrc;
-            dEl.innerHTML = `${statusText} (即時)<br><a href="https://tenki.jp/forecast/8/40/#forecast-others-point-entries" target="_blank" class="weather-tenki-btn">Tenki.jp 詳細預報</a>`;
-
-        } catch(e) {
-            tEl.innerText = "?";
-            dEl.innerHTML = `<a href="https://tenki.jp/forecast/8/40/#forecast-others-point-entries" target="_blank" class="weather-tenki-btn">點我查 Tenki.jp</a>`;
         }
     }
 
