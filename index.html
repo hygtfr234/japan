@@ -3,42 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>四國冒險日誌 V10.0</title>
-    <!-- 引入可愛字體 -->
+    <title>四國冒險日誌 V11.0</title>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --maple-bg: #87CEEB; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
         body {
             font-family: 'M PLUS Rounded 1c', sans-serif;
             background-color: var(--maple-bg);
-            /* 背景圖 */
             background-image: url('https://i.pinimg.com/originals/1e/86/82/1e8682d029094054a138c2084c83091e.jpg');
             background-size: cover; background-attachment: fixed; background-position: center bottom;
             margin: 0; padding: 8px; color: #333; padding-bottom: 60px; overflow-x: hidden;
         }
-
         .quest-window {
             max-width: 600px; margin: 5px auto; background: #FDFDFD;
             border: 2px solid #888; border-radius: 12px;
             box-shadow: 0 0 0 3px #555, 0 10px 20px rgba(0,0,0,0.4); 
             overflow: hidden; position: relative; z-index: 10;
         }
-
         .window-header {
             background: linear-gradient(to bottom, #4b6cb7, #182848);
             padding: 10px 15px; color: white; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 3px solid #333;
         }
-
         .header-icon {
             width: 40px; height: 40px; object-fit: contain; margin-right: 10px;
             filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.5)); animation: bounce 2s infinite;
         }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-        /* Tabs */
         .tabs { display: flex; width: 100%; background: #E0E0E0; border-bottom: 2px solid #AAA; }
         .tab-btn {
             flex: 1; background: linear-gradient(to bottom, #f8f8f8, #dcdcdc);
@@ -53,7 +46,6 @@
 
         .content-area { background: #FFF; padding: 15px; min-height: 480px; position: relative; }
 
-        /* 天氣面板 */
         .weather-panel {
             background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
             border: 2px solid #1E88E5; border-radius: 12px; padding: 12px; margin-bottom: 15px;
@@ -70,411 +62,5 @@
             margin-top: 8px; border: 2px solid #1565C0;
         }
 
-        /* 導航按鈕 */
         .btn-nav { flex: 1; background: linear-gradient(to bottom, #4facfe, #00f2fe); padding: 12px; }
-        .btn-info { width: 60px; background: linear-gradient(to bottom, #ffd200, #f7971e); color: white; font-size: 18px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); }
-        .btn-hotel { width:100%; background: linear-gradient(to bottom, #ff758c, #ff7eb3); font-size: 20px; padding: 18px; margin-top: 20px; border-radius: 8px; color: white; text-decoration: none; font-weight: bold; display: block; text-align: center; border: 1px solid #ff758c;}
-        
-        .action-btns { display: flex; gap: 8px; margin-top: 10px; }
-        .btn { display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold; color: white; text-decoration: none; }
-
-        /* 行程列表 */
-        .quest-list { list-style: none; padding: 0; margin: 0; }
-        .quest-item { border-bottom: 1px dashed #CCC; padding: 15px 0; }
-        .quest-item:last-child { border-bottom: none; }
-        .quest-header { display: flex; align-items: center; margin-bottom: 8px; }
-        .quest-time {
-            background: #333; color: #FFCC00; padding: 3px 8px; border-radius: 4px;
-            font-size: 14px; font-weight: bold; margin-right: 10px; min-width: 60px; text-align: center;
-        }
-        .quest-title { font-size: 18px; font-weight: 800; color: #222; display: flex; align-items: center; }
-        .quest-desc { font-size: 15px; color: #555; margin: 0 0 12px 0; line-height: 1.4; padding-left: 2px; }
-        
-        /* 小圖示設定 */
-        .event-icon-img { 
-            width: 32px; height: 32px; margin-left: 8px; 
-            object-fit: contain; vertical-align: middle; 
-            display: inline-block; /* 強制顯示 */
-        }
-
-        /* 拉圖斯 + 對話框樣式 */
-        .papulatus-container {
-            display: none; /* 預設隱藏 */
-            text-align: center;
-            margin-top: 30px;
-            position: relative;
-        }
-        .papulatus-img {
-            width: 150px;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .speech-bubble {
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #fff;
-            border: 3px solid #333;
-            border-radius: 15px;
-            padding: 10px 20px;
-            font-size: 20px;
-            font-weight: 900;
-            color: #d32f2f;
-            white-space: nowrap;
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-        }
-        .speech-bubble::after {
-            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-            border-width: 10px 10px 0; border-style: solid; border-color: #333 transparent;
-        }
-
-        /* 經驗值條 */
-        .exp-bar-container {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 40px;
-            background: #2b2b2b; border-top: 2px solid #555;
-            display: flex; align-items: center; padding: 0 15px; z-index: 999;
-        }
-        .exp-track { flex: 1; height: 16px; background: #111; border-radius: 8px; overflow: hidden; }
-        .exp-fill { height: 100%; background: linear-gradient(to bottom, #00FF00, #00CC00); width: 0%; transition: 0.5s; }
-
-        /* NPC 對話框 */
-        .npc-dialog {
-            background: #FFF8DC; border: 2px solid #DAA520; border-radius: 12px;
-            padding: 15px 15px 15px 65px; position: relative; margin-top: 25px;
-            font-size: 14px; line-height: 1.6; color: #4A3B2A;
-        }
-        .npc-dialog::before {
-            content: ''; width: 50px; height: 50px;
-            background-image: url('https://maplestory.io/api/gms/62/mob/1210102/render/move?center=true');
-            background-size: contain; background-repeat: no-repeat;
-            position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
-        }
-
-        /* Sub Nav */
-        .sub-nav-container { display: flex; gap: 10px; margin-bottom: 20px; background: #EEE; padding: 5px; border-radius: 8px; }
-        .sub-nav-btn { flex: 1; padding: 10px; border: 2px solid transparent; border-radius: 6px; font-weight: bold; cursor: pointer; background: #CCC; color: #555; }
-        .sub-nav-btn.active-main { background: #FFF; border-color: #FFCC00; color: #333; }
-        .sub-nav-btn.active-backup { background: #E6E6FA; border-color: #9370DB; color: #4B0082; }
-
-    </style>
-</head>
-<body>
-
-<div class="quest-window">
-    <div class="window-header">
-        <div style="display:flex; align-items:center;">
-            <!-- 標題旁的圖示 -->
-            <img src="https://maplestory.io/api/gms/62/mob/1210100/render/move?center=true" class="header-icon" alt="icon">
-            <div style="font-size:18px; text-shadow:1px 1px 0 #000;">🍁 賜國玩四國</div>
-        </div>
-        <div style="font-size:12px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px;">LV.2026 日本四國初心者</div>
-    </div>
-
-    <div class="tabs">
-        <div class="tab-btn active" onclick="loadDay(1)">D1<span class="tab-sub">高松</span></div>
-        <div class="tab-btn" onclick="loadDay(2)">D2<span class="tab-sub">小豆島</span></div>
-        <div class="tab-btn" onclick="loadDay(3)">D3<span class="tab-sub">金刀比羅</span></div>
-        <div class="tab-btn" onclick="loadDay(4)">D4<span class="tab-sub">倉敷</span></div>
-        <div class="tab-btn" onclick="loadDay(5)">D5<span class="tab-sub">返程</span></div>
-        <div class="tab-btn" onclick="loadDay('info')">INFO<span class="tab-sub">住宿</span></div>
-    </div>
-
-    <div class="content-area" id="mainContent">
-        <!-- JS 內容渲染 -->
-    </div>
-</div>
-
-<div class="exp-bar-container">
-    <span style="color:#FFCC00; font-weight:900; margin-right:10px;">EXP</span>
-    <div class="exp-track"><div class="exp-fill" id="expFill"></div></div>
-    <span style="color:white; font-size:12px; margin-left:10px;" id="expText">0%</span>
-</div>
-
-<script>
-    // =========================================================
-    // 🎨 圖片更換區 (請在這裡貼上您的圖片網址)
-    // =========================================================
-    
-    // 【在這裡貼上您自己的圖片網址】
-    const MY_PHOTO_URL = "https://cdn-icons-png.flaticon.com/512/3125/3125713.png"; // 如果您有照片，把網址貼在引號內
-
-    // 內建圖庫 (使用穩定連結)
-    const ICONS = {
-        // 飛機
-        plane: "https://cdn-icons-png.flaticon.com/512/7893/7893979.png", 
-        // 船
-        boat: "https://cdn-icons-png.flaticon.com/512/2942/2942544.png",
-        // 美食
-        food: "https://cdn-icons-png.flaticon.com/512/706/706164.png",
-        // 景點
-        sight: "https://cdn-icons-png.flaticon.com/512/3284/3284666.png",
-        // 購物
-        shop: "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-        // 開車
-        car: "https://cdn-icons-png.flaticon.com/512/2554/2554978.png",
-        // 使用者自訂 (呼叫 'custom' 時會顯示您的照片)
-        custom: MY_PHOTO_URL 
-    };
-
-    // =========================================================
-    // 📅 行程資料
-    // =========================================================
-    const itinerary = {
-        1: {
-            title: "Day 1｜抵達高松",
-            date: "1/23 (五)", location: "Takamatsu", lat: 34.3428, long: 134.0466,
-            events: [
-                { time: "07:00", title: "CI278 桃園起飛", desc: "前往高松，冒險開始！", lat: 25.0797, lng: 121.2342, icon: 'plane' },
-                { time: "10:20", title: "抵達高松空港", desc: "入境手續、取車", lat: 34.2142, lng: 134.0157, icon: 'car' },
-                { time: "12:00", title: "租車 & 午餐", desc: "涮乃葉 (吃飽出發)", lat: 34.2963, lng: 134.0441, link: "https://maps.app.goo.gl/KdNuojGtmtbTNwVn7", icon: 'food' },
-                { time: "13:30", title: "栗林公園", desc: "米其林三星庭園 (2H)", lat: 34.3297, lng: 134.0444, icon: 'sight' },
-                { time: "17:30", title: "商店街散策", desc: "八大條商店街自由逛", lat: 34.3444, lng: 134.0522, icon: 'shop' },
-                { time: "18:30", title: "Vent Buffet", desc: "晚餐時光", lat: 34.3512, lng: 134.0560, link: "https://maps.app.goo.gl/uX7nC3x7z8x9", icon: 'food' }
-            ],
-            note: "第一天輕鬆點，適應右駕。"
-        },
-        2: {
-            title: "Day 2｜小豆島",
-            date: "1/24 (六)", location: "Shodoshima", lat: 34.4950, long: 134.2706,
-            events: [
-                { time: "08:00", title: "高松港 → 土庄港", desc: "搭乘渡輪 (約1H)", lat: 34.3524, lng: 134.0520, icon: 'boat' },
-                { time: "09:30", title: "橄欖公園", desc: "魔女宅急便掃帚拍照", lat: 34.4754, lng: 134.2947, icon: 'sight' },
-                { time: "11:30", title: "醬之鄉", desc: "醬油霜淇淋", lat: 34.4633, lng: 134.3317, icon: 'food' },
-                { time: "14:00", title: "天使之路", desc: "退潮沙灘散步", lat: 34.4746, lng: 134.1849, icon: 'sight' },
-                { time: "16:00", title: "返回高松", desc: "搭船回市區", lat: 34.4827, lng: 134.1754, icon: 'boat' }
-            ],
-            note: `若海況不佳，B計畫改去「滿濃公園」。<br><a href="https://www.google.com/maps/dir/?api=1&destination=34.1678,133.8647&travelmode=driving" target="_blank" style="color:red; font-weight:bold; text-decoration:underline;">🔴 點我開始導航去滿濃公園</a>`
-        },
-        3: {
-            title: "Day 3｜彈性選擇日",
-            date: "1/25 (日)", location: "Kotohira", lat: 34.1923, long: 133.8202,
-            eventsMain: [
-                { time: "09:00", title: "金刀比羅宮", desc: "挑戰1368階梯，參拜狗狗神", lat: 34.1837, lng: 133.8122, icon: 'sight' },
-                { time: "12:30", title: "山越烏龍麵", desc: "烏龍麵名店午餐", lat: 34.2384, lng: 133.9213, icon: 'food' },
-                { time: "14:30", title: "滿濃公園", desc: "國營公園賞花散步", lat: 34.1678, lng: 133.8647, icon: 'sight' },
-                { time: "18:00", title: "市區晚餐", desc: "返回高松", lat: 34.3428, lng: 134.0466, icon: 'food' }
-            ],
-            eventsBackup: [
-                { time: "09:00", title: "前往男木島", desc: "高松港搭船前往", lat: 34.3524, lng: 134.0520, icon: 'boat' },
-                { time: "10:00", title: "男木島 (貓島)", desc: "豐玉姬神社、擼貓散步", lat: 34.4262, lng: 134.0560, icon: 'sight' },
-                { time: "13:00", title: "返回高松", desc: "市區午餐 & 購物", lat: 34.3428, lng: 134.0466, icon: 'shop' },
-                { time: "15:00", title: "室內行程", desc: "商店街 / 咖啡廳休息", lat: 34.3444, lng: 134.0522, icon: 'food' }
-            ],
-            note: "根據當天體力和天氣，自由切換上方按鈕選擇行程！"
-        },
-        4: {
-            title: "Day 4｜倉敷一日遊",
-            date: "1/26 (一)", location: "Kurashiki", lat: 34.5951, long: 133.7667,
-            events: [
-                { time: "08:00", title: "前往倉敷", desc: "自駕/JR (瀨戶大橋)", lat: 34.5951, lng: 133.7667, icon: 'car' },
-                { time: "10:00", title: "倉敷美觀地區", desc: "運河遊船、古街散步", lat: 34.5957, lng: 133.7712, icon: 'sight' },
-                { time: "12:00", title: "古市烏龍麵", desc: "午餐推薦", lat: 34.5961, lng: 133.7692, link: "https://maps.app.goo.gl/6z3z3", icon: 'food' },
-                { time: "14:00", title: "茶屋大橋", desc: "水果聖代下午茶", lat: 34.5952, lng: 133.7720, icon: 'food' },
-                { time: "17:00", title: "返回高松", desc: "車程約 1.5 - 2 小時", lat: 34.3428, lng: 134.0466, icon: 'car' }
-            ],
-            note: "記得留肚子吃甜點！"
-        },
-        5: {
-            title: "Day 5｜返程日",
-            date: "1/27 (二)", location: "Takamatsu", lat: 34.3428, long: 134.0466,
-            events: [
-                { time: "10:00", title: "丸龜町 Green", desc: "最後衝刺購物", lat: 34.3444, lng: 134.0490, icon: 'shop' },
-                { time: "11:30", title: "四國水族館", desc: "(選) 順路可去", lat: 34.3093, lng: 133.7997, icon: 'sight' },
-                { time: "14:30", title: "前往機場", desc: "加油、還車", lat: 34.2142, lng: 134.0157, icon: 'car' },
-                { time: "18:55", title: "CI179 起飛返台", desc: "Bye Bye!", lat: 34.2142, lng: 134.0157, icon: 'plane' }
-            ],
-            note: "水族館跟機場算順路，但要抓好還車時間。"
-        }
-    };
-
-    let currentDay3Mode = 'main';
-
-    function loadDay(day) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        
-        if (typeof day === 'number') {
-            document.querySelectorAll('.tab-btn')[day - 1].classList.add('active');
-            updateExp(day);
-            renderSchedule(day);
-        } else {
-            document.querySelectorAll('.tab-btn')[5].classList.add('active');
-            updateExp(5); 
-            renderInfo();
-        }
-    }
-
-    function renderSchedule(day) {
-        const data = itinerary[day];
-        const content = document.getElementById('mainContent');
-        
-        fetchWeatherDetailed(data.lat, data.long, data.location);
-
-        let html = `
-            <div class="weather-panel">
-                <div class="weather-left">
-                    <div class="weather-loc">📍 ${data.location} ${data.date}</div>
-                    <div id="weatherDesc" class="weather-detail">讀取中...</div>
-                </div>
-                <div class="weather-right">
-                    <span id="weatherIcon" class="weather-icon">🤔</span>
-                    <span id="weatherTemp" class="weather-temp">--°</span>
-                </div>
-            </div>
-
-            <h2 style="margin:0 0 15px 0; color:#333; border-bottom:2px dashed #AAA; padding-bottom:5px;">
-                ${data.title}
-            </h2>
-        `;
-
-        if (day === 3) {
-            html += `
-                <div class="sub-nav-container">
-                    <button class="sub-nav-btn ${currentDay3Mode==='main'?'active-main':''}" onclick="switchDay3('main')">☀ 主線：爬山</button>
-                    <button class="sub-nav-btn ${currentDay3Mode==='backup'?'active-backup':''}" onclick="switchDay3('backup')">☔ 備案：看貓</button>
-                </div>
-                <div id="day3ListContainer"></div>
-            `;
-            setTimeout(() => renderDay3List(), 0);
-        } else {
-            html += generateListHtml(data.events);
-        }
-
-        if(data.note) {
-            html += `<div class="npc-dialog">${data.note}</div>`;
-        }
-
-        content.innerHTML = html;
-        window.scrollTo(0,0);
-    }
-
-    function generateListHtml(events) {
-        let listHtml = `<ul class="quest-list">`;
-        events.forEach(event => {
-            let navUrl = `https://www.google.com/maps/dir/?api=1&destination=${event.lat},${event.lng}&travelmode=driving`;
-            let infoUrl = event.link ? event.link : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title)}&query_place_id=${event.lat},${event.lng}`;
-            
-            // 優先使用自訂圖示
-            let iconSrc = ICONS['sight']; // 預設
-            if (event.icon && ICONS[event.icon]) {
-                iconSrc = ICONS[event.icon];
-            }
-
-            listHtml += `
-                <li class="quest-item">
-                    <div class="quest-header">
-                        <span class="quest-time">${event.time}</span>
-                        <span class="quest-title">
-                            ${event.title} 
-                            <img src="${iconSrc}" class="event-icon-img" alt="icon">
-                        </span>
-                    </div>
-                    <div class="quest-desc">${event.desc}</div>
-                    <div class="action-btns">
-                        <a href="${navUrl}" target="_blank" class="btn btn-nav">🚗 導航 GO</a>
-                        <a href="${infoUrl}" target="_blank" class="btn btn-info">ℹ️</a>
-                    </div>
-                </li>
-            `;
-        });
-        listHtml += `</ul>`;
-        return listHtml;
-    }
-
-    function switchDay3(mode) {
-        currentDay3Mode = mode;
-        const btns = document.querySelectorAll('.sub-nav-btn');
-        btns[0].className = `sub-nav-btn ${mode==='main'?'active-main':''}`;
-        btns[1].className = `sub-nav-btn ${mode==='backup'?'active-backup':''}`;
-        renderDay3List();
-    }
-
-    function renderDay3List() {
-        const container = document.getElementById('day3ListContainer');
-        if(!container) return;
-        const events = currentDay3Mode === 'main' ? itinerary[3].eventsMain : itinerary[3].eventsBackup;
-        container.innerHTML = generateListHtml(events);
-    }
-
-    function renderInfo() {
-        document.getElementById('mainContent').innerHTML = `
-            
-            <!-- 拉圖斯區域 -->
-            <div class="papulatus-container" style="display:block;">
-                <div class="speech-bubble">海底撈月</div>
-                <img src="https://maplestory.io/api/gms/62/mob/8500001/render/move?center=true" class="papulatus-img" alt="papulatus">
-            </div>
-
-            <div style="text-align:center; padding-top:20px;">
-                <h2>🏠 FAV HOTEL TAKAMATSU</h2>
-                <p>高松市中心</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=FAV+HOTEL+TAKAMATSU" target="_blank" class="btn btn-hotel">
-                    🏨 導航去飯店
-                </a>
-                <div class="npc-dialog">
-                    隊長筆記：<br>
-                    房間已確認，放好行李就來集合！<br>
-                    Info 頁面不計算 EXP 喔~
-                </div>
-            </div>
-        `;
-    }
-
-    function updateExp(day) {
-        let pct = 0;
-        if(typeof day === 'number') {
-            pct = Math.min(100, Math.round((day/5)*100));
-        } else {
-            // INFO 頁面不計算進度，顯示 100% 或保持 Day 5 的狀態
-            pct = 100;
-        }
-        document.getElementById('expFill').style.width = pct + '%';
-        document.getElementById('expText').innerText = pct + '%';
-    }
-
-    async function fetchWeatherDetailed(lat, long, loc) {
-        const tEl = document.getElementById('weatherTemp');
-        const dEl = document.getElementById('weatherDesc');
-        const iEl = document.getElementById('weatherIcon');
-        
-        if(!tEl) return;
-        tEl.innerText = "--"; dEl.innerText = "讀取中..."; iEl.innerText = "⏳";
-
-        try {
-            // 只抓「現在」的天氣，避免日期錯誤導致 API 失敗
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true&timezone=Asia%2FTokyo`;
-            
-            const res = await fetch(url);
-            if(!res.ok) throw new Error("API Error");
-            const data = await res.json();
-            
-            const current = data.current_weather;
-            const temp = Math.round(current.temperature);
-            const code = current.weathercode;
-
-            let iconChar = "☀"; let statusText = "晴朗";
-            if (code >= 71) { iconChar = "❄️"; statusText = "下雪"; }
-            else if (code >= 51) { iconChar = "🌧"; statusText = "有雨"; }
-            else if (code >= 45) { iconChar = "🌫"; statusText = "有霧"; }
-            else if (code >= 1) { iconChar = "⛅"; statusText = "多雲"; } 
-            
-            tEl.innerText = `${temp}°`;
-            iEl.innerText = iconChar;
-            dEl.innerText = `${statusText} (即時)`;
-
-        } catch(e) {
-            console.log("Weather Error:", e);
-            tEl.innerText = "?"; iEl.innerText = "⚠️";
-            // 失敗時直接給 Google 天氣連結按鈕
-            dEl.innerHTML = `<a href="https://www.google.com/search?q=weather+${loc}" target="_blank" class="weather-fallback-btn">🔍 點我看天氣</a>`;
-        }
-    }
-
-    loadDay(1);
-</script>
-
-</body>
-</html>
+        .btn-info { width: 60px; background: linear-gradient(to bottom, #ffd200, #f7971e); color: white; font-size: 18px; text-shado
