@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>四國冒險日誌 V16.0</title>
+    <title>四國冒險日誌 V17.0</title>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Noto+Serif+TC:wght@900&display=swap" rel="stylesheet">
     <style>
         :root { --maple-bg: #87CEEB; }
@@ -63,13 +63,8 @@
         .weather-right { text-align: right; display: flex; align-items: center; gap: 5px; }
         .weather-icon-img { width: 45px; height: 45px; object-fit: contain; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1)); }
         .weather-temp { font-size: 26px; color: #D84315; font-weight: 900; }
-        .weather-fallback-btn {
-            display: inline-block; background: #fff; color: #1565C0; text-decoration: none;
-            padding: 4px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;
-            margin-top: 5px; border: 1px solid #1565C0;
-        }
 
-        /* 導航按鈕 (超級瞬移之石) */
+        /* 導航按鈕 (瞬移石) */
         .btn-nav { 
             flex: 1; background: linear-gradient(to bottom, #4facfe, #00f2fe); padding: 10px; 
             border: 1px solid #0091EA; box-shadow: 0 4px 0 #006064; text-shadow: 0 1px 1px rgba(0,0,0,0.3);
@@ -78,7 +73,7 @@
         }
         .btn-nav:active { box-shadow: 0 0 0 #006064; transform: translateY(4px); }
         
-        /* 資訊按鈕 (一般黃色按鈕) */
+        /* 資訊按鈕 (黃色) */
         .btn-info { 
             width: 60px; background: linear-gradient(to bottom, #ffd200, #f7971e); color: white; font-size: 20px; 
             border: 1px solid #F57F17; box-shadow: 0 4px 0 #E65100; font-family: serif; font-weight: bold;
@@ -87,6 +82,7 @@
         }
         .btn-info:active { box-shadow: 0 0 0 #E65100; transform: translateY(4px); }
         
+        /* 飯店按鈕 (粉色) */
         .btn-hotel { 
             width:100%; background: linear-gradient(to bottom, #ff758c, #ff7eb3); font-size: 20px; padding: 15px; margin-top: 10px; 
             border-radius: 8px; color: white; text-decoration: none; font-weight: bold; display: block; text-align: center; 
@@ -109,22 +105,23 @@
         .quest-title { font-size: 18px; font-weight: 800; color: #5D4037; display: flex; align-items: center; }
         .quest-desc { font-size: 15px; color: #555; margin: 0 0 12px 0; line-height: 1.4; padding-left: 2px; }
         
+        /* 小圖示設定 */
         .event-icon-img { 
             width: 35px; height: 35px; margin-left: 8px; 
             object-fit: contain; vertical-align: middle; 
             display: inline-block; filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.2));
         }
-        /* 特大圖示 (給飛船用) */
         .large-icon { width: 120px; height: auto; display: block; margin: 10px auto; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3)); }
 
-        /* 經驗值條 */
+        /* 經驗值條 (99.99% 風格) */
         .exp-bar-container {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 35px;
             background: #2b2b2b; border-top: 2px solid #FFD700;
             display: flex; align-items: center; padding: 0 15px; z-index: 999;
         }
         .exp-track { flex: 1; height: 12px; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #555; }
-        .exp-fill { height: 100%; background: linear-gradient(to bottom, #00FF00, #00CC00); width: 0%; transition: 0.5s; }
+        .exp-fill { height: 100%; background: linear-gradient(to bottom, #00FF00, #00CC00); width: 99.99%; }
+        .exp-text { color: #FFF; font-size: 12px; margin-left: 10px; font-family: monospace; white-space: nowrap; }
 
         /* NPC 對話框 */
         .npc-dialog {
@@ -134,7 +131,7 @@
         }
         .npc-dialog::before {
             content: ''; width: 50px; height: 50px;
-            background-image: url('https://maplestory.io/api/gms/62/mob/1210102/render/move?center=true'); /* 菇菇寶貝 */
+            background-image: url('https://maplestory.io/api/gms/62/mob/1210102/render/move?center=true');
             background-size: contain; background-repeat: no-repeat;
             position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
         }
@@ -160,7 +157,6 @@
         .drop-item {
             width: 45px; height: 45px; position: absolute; animation: bounceDrop 2s infinite; filter: drop-shadow(0 0 5px yellow); z-index: 3;
         }
-        /* 調整寶物位置，不被擋住 */
         .drop-1 { top: 90px; left: 15%; animation-delay: 0s; } /* 腰帶 */
         .drop-2 { top: 70px; right: 15%; animation-delay: 0.5s; } /* 靈魂 */
         .drop-3 { top: 150px; right: 25%; animation-delay: 1s; } /* 發條 */
@@ -173,9 +169,9 @@
             font-size: 14px; text-align: left; margin: 15px auto; width: 98%;
             font-family: 'Arial', sans-serif; line-height: 1.5;
         }
-        .chat-header { color: #FFFF00; font-weight: bold; margin-right: 5px; }
-        .chat-content { color: #00BFFF; font-weight: bold; } /* 深藍/亮藍 */
-        .chat-system { color: #FFCC00; font-style: italic; margin-top: 5px; font-size: 12px; }
+        .chat-purple { color: #EE82EE; font-weight: bold; } /* 紫色 */
+        .chat-green { color: #00FF00; font-weight: bold; } /* 亮綠 */
+        .chat-content { color: #FFF; font-weight: normal;}
 
         /* 雪花特效 */
         .snowflake {
@@ -210,92 +206,83 @@
     <div class="content-area" id="mainContent"></div>
 </div>
 
+<!-- 底部 EXP 條 -->
 <div class="exp-bar-container">
     <span style="color:#FFCC00; font-weight:900; margin-right:10px;">EXP</span>
     <div class="exp-track"><div class="exp-fill" id="expFill"></div></div>
-    <span style="color:white; font-size:12px; margin-left:10px;" id="expText">0%</span>
+    <span class="exp-text">Next Level: 2027 (99.99%)</span>
 </div>
 
 <div id="snowContainer" class="snow-container"></div>
 
 <script>
     // =========================================================
-    // 🎨 豐富圖示庫 (楓之谷風格)
+    // 🎨 內建 Base64 圖示 (保證不破圖)
     // =========================================================
     
-    // 超級瞬移之石 (導航用)
-    const TELEPORT_ROCK = "https://maplestory.io/api/gms/62/item/5040004/icon"; 
-    
-    // 華航飛機 (Base64)
     const PLANE_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjRTMwMDc5IiBkPSJNMzUuNCAyNDQuOGMtMi45IDguNSAxLjYgMTcuNyAxMC4zIDIwLjUgOC43IDIuOCAxOC4xLTIgMjEuMS0xMC41IDMuMS04LjYtMS42LTE3LjktMTAuNC0yMC43LTguNi0yLjgtMTguMSAxLjktMjEgMTAuN3ptMTI4LjIgOTEuMWMtMTYuNy01LjMtMjUuMSA4LjgtMTguNCAxOS45IDUuMiA4LjUgMTkuMiA5LjIgMzEuOSAzLjggMTEuNy01IDExLjItMTcuNS41LTIxLjQtNC4xLTEuNS05LjItMi4yLTE0LTIuM3ptLTgwLjUgNzEuOGMtMTQuMyAxNS41IDUgMzIuMyAyMS40IDMwLjUgMTIuOS0xLjQgMTguNi0xMi42IDE0LjUtMjIuOS0zLjMtOC40LTE1LjYtMTQuNC0yNi41LTEyLjN6bTMxOS41LTg4LjJjLTE4LjUgMjMuNi00Ny41IDM4LjMtNjQuMyA1My4yLTIyLjYgMjAuMS0yNS4xIDUyLjEtMy41IDczLjEgMjEuNCAyMC45IDU4LjMgMTYuNCA4My44LTEwLjIgMjMuNS0yNC42IDMyLjUtNTcuMyAxNS45LTk4LjctNi41LTE2LjEtMTgtMTkuOS0zMS45LTE3LjR6bS0xMzUuMy01LjRjLTEuOS0xNS41LTE2LjgtMjEuMy0zMy0xMi45LTE2LjEgOC40LTE2LjggMjguNi0xLjMgMzQuNCAxMS42IDQuMyAyNy41LTMuMyAzMi43LTE2LjEgMS4xLTIuNyAxLjYtNS40IDEuNi01LjR6bTE0LjkgMTY4LjJjLTI1LjEgNi42LTI4LjIgNDAuNS00LjUgNDguMyAxOC42IDYuMSAzNy44LTE1IDMxLjQtMzcuNS0zLjUtMTIuMy0xNi45LTE1LjctMjYuOS0xMC44em0tMjIxLjYgMi44Yy04LjUgMTEuMS0yLjIgMjcuMiAxMS43IDI5LjUgMTEuMSAxLjkgMTguNC0xMC4xIDEyLjctMjAuNS00LjctOC41LTE1LjktMTQuOS0yNC40LTl6bTMzNi40LTI4LjRjLTIzLjUtOC42LTM1LjUgMTguNi0xOC40IDM2LjggMTMuNSAxNC4zIDM3LjMgNyAzOC0xMS44LjUtMTQuOC0xMC4xLTIxLjUtMTkuNi0yNXoiLz48L3N2Zz4=";
+    const BOAT_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMzA0RkZFIiBkPSJNMzIuNCAzNjUuOWM0OC45IDE4LjYgODcuOSAxNiAxMjQuOCAwIDM2LjktMTYuMSA3Ni0xOC42IDEyNC44IDAgNDguOSAxOC42IDg3LjkgMTYgMTI0LjggMCAzNi45LTE2LjEgNzYtMTguNiAxMjQuOCAwIDYuMSA4LjkgNC42IDE4LjIgMy41IDI1LjctMS4xIDcuNC02LjEgMTAuMy0xMi4yIDcuNC0zNi45LTE2LjEtNzYtMTguNi0xMjQuOCAwLTQ4LjkgMTguNi04Ny45IDE2LTEyNC44IDAtMzYuOSAxNi4xLTc2IDE4LjYtMTI0LjggMC0zNy0xNi4xLTc1LjktMTguNi0xMjQuOCAwLTQuOS0yLjEtMTEuMS01LTE4LjMtOC41LTcuMS0zLjQtMTMuNi0uNi0xNC41IDUuOHptNDUuMi02Ny42bDIzLjQtMTg2LjRjMS41LTExLjggMTEuNS0yMC40IDIzLjMtMjAuNGgyNDguMWMxMS44IDAgMjEuOCA4LjYgMjMuMyAyMC40bDIzLjQgMTg2LjRjLTMwLjItNy44LTcyLjMtNi41LTEwOC41IDUuOC0zNi45IDE2LjEtNzYgMTguNi0xMjQuOCAwLTM5LjktMTMuNi04NS41LTEzLjYtMTA4LjItNS44eiIvPjwvc3ZnPg==";
+    
+    // 瞬移之石 (藍色魔法石 Base64)
+    const ROCK_ICON_B64 = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjk3OUZGIiBkPSJNMjU2IDQ4QzE0MS4xIDQ4IDQ4IDE0MS4xIDQ4IDI1NnM5My4xIDIwOCAyMDggMjA4IDIwOC05My4xIDIwOC0yMDhTMzcwLjkgNDggMjU2IDQ4em0wIDM2OGMtODguNCAwLTE2MC03MS42LTE2MC0xNjBTMTY3LjYgOTYgMjU2IDk2czE2MCA3MS42IDE2MCAxNjAtNzEuNiAxNjAtMTYwIDE2MHoiLz48cGF0aCBmaWxsPSIjOERDQUZGIiBkPSJNMjU2IDE0NGMtNjEuOSAwLTExMiA1MC4xLTExMiAxMTJzNTAuMSAxMTIgMTEyIDExMiAxMTItNTAuMSAxMTItMTEyLTUwLjEtMTEyLTExMi0xMTJ6Ii8+PC9zdmc+";
+    
+    // 回家卷軸 (Base64)
+    const SCROLL_ICON_B64 = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjRkZDNTEwIiBkPSJNMzIgMTkyaDQ0OHYzMmgtNDQ4eiIvPjxwYXRoIGZpbGw9IiNGRkEwMDAiIGQ9Ik0zMiAyMjRoNDQ4djY0aC00NDh6Ii8+PHBhdGggZmlsbD0iI0ZGRUMtMyIgZD0iTTQ0OCAxNjB2MTkyYzAgMTcuNy0xNC4zIDMyLTMyIDMySDk2Yy0xNy43IDAtMzItMTQuMy0zMi0zMlYxNjBjMC0xNy43IDE0LjMtMzIgMzItMzJoMzIwYzE3LjcgMCAzMiAxNC4zIDMyIDMyeiIvPjwvc3ZnPg==";
 
-    // 楓之谷道具 - 多樣化
-    const ORBIS_SHIP = "https://maplestory.io/api/gms/62/npc/2012000/render?center=true"; // 天空之城船
-    const CAR_MOUNT = "https://maplestory.io/api/gms/62/item/1902000/icon"; // 野豬(租車)
-    const UNAGI = "https://maplestory.io/api/gms/62/item/2020002/icon"; // 鰻魚(午餐)
-    const TAKOYAKI = "https://maplestory.io/api/gms/62/item/2022001/icon"; // 章魚燒(晚餐)
-    const RAMEN = "https://maplestory.io/api/gms/62/item/2022039/icon"; // 拉麵
-    const TREE_BRANCH = "https://maplestory.io/api/gms/62/item/4000003/icon"; // 樹枝(公園)
-    const GOLD_LEAF = "https://maplestory.io/api/gms/62/item/4001126/icon"; // 楓葉(神社)
-    const ICE_CREAM = "https://maplestory.io/api/gms/62/item/2020025/icon"; // 冰淇淋
-    const COFFEE = "https://maplestory.io/api/gms/62/item/2020016/icon"; // 咖啡
-    const SHOP_BAG = "https://maplestory.io/api/gms/62/item/4031138/icon"; // 錢袋
-    const SHRIMP = "https://maplestory.io/api/gms/62/item/4000259/icon"; // 鮮蝦(水族館)
-    const PET_FOOD = "https://maplestory.io/api/gms/62/item/2120000/icon"; // 飼料(貓島)
-    const BOAT_ICON = "https://cdn-icons-png.flaticon.com/512/2942/2942544.png"; // 渡輪
-    const ONSEN = "https://maplestory.io/api/gms/62/map/200000000/mark"; // 溫泉標誌(代表景點)
+    // 其他圖示維持 URL (部分使用穩定的)
+    const ORBIS_SHIP = "https://maplestory.io/api/gms/62/npc/2012000/render?center=true"; 
+    const CAR_MOUNT = "https://maplestory.io/api/gms/62/item/1902000/icon"; 
+    const BENTO = "https://maplestory.io/api/gms/62/item/2022000/icon"; 
+    const TREE_BRANCH = "https://maplestory.io/api/gms/62/item/4000003/icon"; 
+    const GOLD_LEAF = "https://maplestory.io/api/gms/62/item/4001126/icon"; 
+    const ICE_CREAM = "https://maplestory.io/api/gms/62/item/2020025/icon"; 
+    const SHOP_BAG = "https://maplestory.io/api/gms/62/item/4031138/icon"; 
+    const FISH_ITEM = "https://maplestory.io/api/gms/62/item/4000259/icon"; 
+    const PET_FOOD = "https://maplestory.io/api/gms/62/item/2120000/icon"; 
+    const COFFEE = "https://maplestory.io/api/gms/62/item/2020016/icon";
+    const TAKOYAKI = "https://maplestory.io/api/gms/62/item/2022001/icon";
+    const RAMEN = "https://maplestory.io/api/gms/62/item/2022039/icon";
+    const ONSEN = "https://maplestory.io/api/gms/62/map/200000000/mark";
 
     // 天氣圖示
-    const WEATHER_SUN = "https://maplestory.io/api/gms/62/item/4000038/icon"; // 太陽碎片
-    const WEATHER_CLOUD = "https://maplestory.io/api/gms/62/item/4031579/icon"; // 雲朵
-    const WEATHER_RAIN = "https://maplestory.io/api/gms/62/item/4000004/icon"; // 水滴
-    const WEATHER_SNOW = "https://maplestory.io/api/gms/62/item/4000073/icon"; // 雪花
+    const WEATHER_SUN = "https://maplestory.io/api/gms/62/item/4000038/icon"; 
+    const WEATHER_CLOUD = "https://maplestory.io/api/gms/62/item/4031579/icon"; 
+    const WEATHER_RAIN = "https://maplestory.io/api/gms/62/item/4000004/icon"; 
+    const WEATHER_SNOW = "https://maplestory.io/api/gms/62/item/4000073/icon"; 
 
-    // 圖示對應表
     const ICONS = {
-        orbis_ship: ORBIS_SHIP,
-        boat: BOAT_ICON,
-        car: CAR_MOUNT,
-        food: UNAGI,
-        dinner: TAKOYAKI,
-        noodle: RAMEN,
-        nature: TREE_BRANCH,
-        shrine: GOLD_LEAF,
-        ice: ICE_CREAM,
-        coffee: COFFEE,
-        shop: SHOP_BAG,
-        fish: SHRIMP,
-        cat: PET_FOOD,
-        rock: TELEPORT_ROCK,
-        onsen: ONSEN
+        plane: PLANE_ICON, boat: BOAT_ICON, car: CAR_MOUNT, food: BENTO,
+        sight: TREE_BRANCH, shrine: GOLD_LEAF, ice: ICE_CREAM, shop: SHOP_BAG,
+        fish: FISH_ITEM, cat: PET_FOOD, coffee: COFFEE, dinner: TAKOYAKI, 
+        noodle: RAMEN, onsen: ONSEN, rock: ROCK_ICON_B64, scroll: SCROLL_ICON_B64,
+        orbis_ship: ORBIS_SHIP
     };
 
     // =========================================================
-    // 📅 行程資料 (V16.0)
+    // 📅 行程資料 (V17.0)
     // =========================================================
     const itinerary = {
         1: {
             title: "Day 1｜抵達高松",
             date: "1/23 (五)", location: "Takamatsu", lat: 34.3428, long: 134.0466,
             events: [
-                // 飛機：使用 'orbis_ship'，隱藏按鈕 (noNav: true)
                 { time: "07:00", title: "CI278 桃園起飛", desc: "前往高松，冒險開始！", lat: 25.0797, lng: 121.2342, icon: 'orbis_ship', noNav: true },
                 { time: "10:20", title: "抵達高松空港", desc: "入境、前往 Toyota 租車", lat: 34.2127, lng: 134.0175, icon: 'car', link: "https://www.google.com/search?q=toyota+rent+a+car+takamatsu+airport+shop" },
                 { time: "12:00", title: "租車 & 午餐", desc: "涮乃葉 (補充體力)", lat: 34.2963, lng: 134.0441, link: "https://maps.app.goo.gl/KdNuojGtmtbTNwVn7", icon: 'food' },
-                { time: "13:30", title: "栗林公園", desc: "米其林三星庭園 (2H)", lat: 34.3297, lng: 134.0444, icon: 'nature' },
-                { time: "17:30", title: "商店街散策", desc: "八大條商店街自由逛", lat: 34.3444, lng: 134.0522, icon: 'shop' },
+                { time: "13:30", title: "栗林公園", desc: "米其林三星庭園 (2H)", lat: 34.3297, lng: 134.0444, icon: 'sight' },
+                { time: "17:30", title: "商店街散步", desc: "八大條商店街自由逛", lat: 34.3444, lng: 134.0522, icon: 'shop' },
                 { time: "18:30", title: "Vent Buffet", desc: "晚餐時光", lat: 34.3512, lng: 134.0560, link: "https://maps.app.goo.gl/uX7nC3x7z8x9", icon: 'dinner' }
             ],
-            note: "第一天輕鬆點，適應右駕。"
+            note: "小心駕駛!這裡禁止賽恩放R"
         },
         2: {
             title: "Day 2｜小豆島",
             date: "1/24 (六)", location: "Shodoshima", lat: 34.4950, long: 134.2706,
             events: [
                 { time: "08:00", title: "高松港 → 土庄港", desc: "搭乘渡輪 (約1H)", lat: 34.3524, lng: 134.0520, icon: 'boat' },
-                { time: "09:30", title: "橄欖公園", desc: "魔女宅急便掃帚拍照", lat: 34.4754, lng: 134.2947, icon: 'nature' },
+                { time: "09:30", title: "橄欖公園", desc: "魔女宅急便掃帚拍照", lat: 34.4754, lng: 134.2947, icon: 'sight' },
                 { time: "11:30", title: "醬之鄉", desc: "醬油霜淇淋", lat: 34.4633, lng: 134.3317, icon: 'ice' },
-                { time: "14:00", title: "天使之路", desc: "退潮沙灘散步", lat: 34.4746, lng: 134.1849, icon: 'onsen' },
+                { time: "14:00", title: "天使之路", desc: "退潮沙灘散步", lat: 34.4746, lng: 134.1849, icon: 'sight' },
                 { time: "16:00", title: "返回高松", desc: "搭船回市區", lat: 34.4827, lng: 134.1754, icon: 'boat' }
             ],
             note: `若海況不佳，B計畫改去「滿濃公園」。<br><a href="https://www.google.com/maps/dir/?api=1&destination=34.1678,133.8647&travelmode=driving" target="_blank" style="color:red; font-weight:bold; text-decoration:underline;">🔴 點我開始導航去滿濃公園</a>`
@@ -306,7 +293,7 @@
             eventsMain: [
                 { time: "09:00", title: "金刀比羅宮", desc: "挑戰1368階梯，參拜狗狗神", lat: 34.1837, lng: 133.8122, icon: 'shrine' },
                 { time: "12:30", title: "山越烏龍麵", desc: "烏龍麵名店午餐", lat: 34.2384, lng: 133.9213, icon: 'noodle' },
-                { time: "14:30", title: "滿濃公園", desc: "國營公園賞花散步", lat: 34.1678, lng: 133.8647, icon: 'nature' },
+                { time: "14:30", title: "滿濃公園", desc: "國營公園賞花散步", lat: 34.1678, lng: 133.8647, icon: 'sight' },
                 { time: "18:00", title: "市區晚餐", desc: "返回高松", lat: 34.3428, lng: 134.0466, icon: 'dinner' }
             ],
             eventsBackup: [
@@ -336,7 +323,6 @@
                 { time: "10:00", title: "丸龜町 Green", desc: "最後衝刺購物", lat: 34.3444, lng: 134.0490, icon: 'shop' },
                 { time: "11:30", title: "四國水族館", desc: "(選) 順路可去", lat: 34.3093, lng: 133.7997, icon: 'fish' },
                 { time: "14:30", title: "還車 (Toyota 空港店)", desc: "加油、還車", lat: 34.2127, lng: 134.0175, icon: 'car', link: "https://www.google.com/search?q=toyota+rent+a+car+takamatsu+airport+shop" },
-                // 飛機：隱藏導航
                 { time: "18:55", title: "CI179 起飛返台", desc: "Bye Bye!", lat: 34.2142, lng: 134.0157, icon: 'orbis_ship', noNav: true }
             ],
             note: "水族館跟機場算順路，但要抓好還車時間。"
@@ -414,12 +400,11 @@
             let navUrl = `https://www.google.com/maps/dir/?api=1&destination=${event.lat},${event.lng}&travelmode=driving`;
             let infoUrl = event.link ? event.link : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title)}&query_place_id=${event.lat},${event.lng}`;
             
-            let iconSrc = ICONS['nature']; 
+            let iconSrc = ICONS['sight']; 
             if (event.icon && ICONS[event.icon]) {
                 iconSrc = ICONS[event.icon];
             }
 
-            // 特殊顯示：如果是飛船，顯示大圖
             let iconHtml = '';
             if (event.icon === 'orbis_ship') {
                 iconHtml = `<img src="${iconSrc}" class="large-icon" alt="ship">`;
@@ -427,7 +412,6 @@
                 iconHtml = `<img src="${iconSrc}" class="event-icon-img" alt="icon">`;
             }
 
-            // 導航與資訊按鈕邏輯
             let btnsHtml = '';
             if (!event.noNav) {
                 btnsHtml = `
@@ -441,7 +425,6 @@
                 `;
             }
 
-            // 如果是飛船，把標題和圖片分開排版
             if (event.icon === 'orbis_ship') {
                 listHtml += `
                     <li class="quest-item">
@@ -495,24 +478,21 @@
             <div class="papulatus-wrapper">
                 <div class="haidilao-text">海底撈月</div>
                 <img src="https://maplestory.io/api/gms/62/mob/8500001/render/move?center=true" class="papulatus-img" alt="papulatus">
-                
-                <!-- 裝備懸浮 -->
                 <img src="https://maplestory.io/api/gms/62/item/1023348/icon" class="drop-item drop-1" title="拉圖斯標誌">
                 <img src="https://maplestory.io/api/gms/62/item/4031179/icon" class="drop-item drop-2" title="異界鑰匙">
                 <img src="https://maplestory.io/api/gms/62/item/4000411/icon" class="drop-item drop-3" title="發條">
             </div>
 
             <div class="chat-log">
-                <span class="chat-header">coward[頻道228]:</span> 
-                <span class="chat-content">四國連5 缺1女鏢賊 直接來 先到先打 請自備1 NB 1 VPN</span>
-                <div class="chat-system">[公會資訊已更新]</div>
+                <span class="chat-purple">coward[頻道228]</span><span class="chat-content">:四國連5 缺1女鏢賊 直接來 先到先打 請自備1 NB 1 VPN</span><br>
+                <span class="chat-purple">beautyYang[頻道6789]</span><span class="chat-content">:sp4</span>
+                <div class="chat-green">[公會資訊已更新]</div>
             </div>
 
             <div style="text-align:center; padding-top:10px;">
                 <h2>🏠 FAV HOTEL TAKAMATSU</h2>
-                <p>高松市中心</p>
                 <a href="https://www.google.com/maps/search/?api=1&query=FAV+HOTEL+TAKAMATSU" target="_blank" class="btn btn-hotel">
-                    <img src="${ICONS.rock}" style="width:24px; vertical-align:middle; margin-right:5px;">
+                    <img src="${ICONS.scroll}" style="width:24px; vertical-align:middle; margin-right:5px;">
                     導航去飯店
                 </a>
             </div>
@@ -520,14 +500,7 @@
     }
 
     function updateExp(day) {
-        let pct = 0;
-        if(typeof day === 'number') {
-            pct = Math.min(100, Math.round((day/5)*100));
-        } else {
-            pct = 100;
-        }
-        document.getElementById('expFill').style.width = pct + '%';
-        document.getElementById('expText').innerText = pct + '%';
+        document.getElementById('expFill').style.width = '99.99%';
     }
 
     function createSnow() {
@@ -544,22 +517,22 @@
         }
     }
 
-    // 天氣 API (強制同步讀取)
+    // 天氣 API (強制顯示版)
     async function fetchWeatherDetailed(lat, long, loc) {
         const tEl = document.getElementById('weatherTemp');
         const dEl = document.getElementById('weatherDesc');
         const iImg = document.getElementById('weatherIconImg');
         
-        if(!tEl) return;
-        tEl.innerText = "--"; dEl.innerText = "讀取中..."; 
+        tEl.innerText = "--"; 
+        dEl.innerText = "讀取中...";
 
         try {
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true&timezone=Asia%2FTokyo`;
-            
             const res = await fetch(url);
-            if(!res.ok) throw new Error("API Error");
-            const data = await res.json();
             
+            if (!res.ok) throw new Error("API Fail");
+            
+            const data = await res.json();
             const current = data.current_weather;
             const temp = Math.round(current.temperature);
             const code = current.weathercode;
@@ -577,9 +550,10 @@
             dEl.innerText = `${statusText} (即時)`;
 
         } catch(e) {
-            console.log("Weather Error:", e);
-            tEl.innerText = "?";
-            dEl.innerHTML = `<a href="https://www.google.com/search?q=weather+${loc}" target="_blank" class="weather-fallback-btn">🔍 點我看天氣</a>`;
+            // 失敗保險：顯示靜態資訊，不留白
+            tEl.innerText = "12°"; 
+            dEl.innerText = "晴時多雲 (預設)";
+            iImg.src = WEATHER_SUN;
         }
     }
 
