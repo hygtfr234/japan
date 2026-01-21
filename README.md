@@ -1,2 +1,2 @@
-# japan
+# Shikoku
 Created with CodeSandbox
